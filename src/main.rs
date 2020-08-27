@@ -1,20 +1,64 @@
-#[macro_use]
-extern crate log;
-extern crate pretty_env_logger;
-
 use std::{env, process, thread};
 use std::borrow::Borrow;
-use std::error::Error;
+use std::time::Instant;
 
-use tokio::net::{TcpListener, TcpStream};
-use tokio_tungstenite::tungstenite;
-use tokio_tungstenite::tungstenite::handshake::server::{ErrorResponse, Response};
-use tungstenite::handshake::server::Request;
+use actix::{Actor, Addr, StreamHandler};
+use actix_web::{App, Error, HttpRequest, HttpResponse, HttpServer, web};
+use actix_web_actors::ws;
+use log::*;
+use pretty_env_logger;
 
-pub mod utils;
+use crate::session::ws_session;
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+mod utils;
+mod database;
+mod session;
+mod server;
+mod json_type;
+
+/// Define http actor
+struct WebSocket;
+
+impl Actor for WebSocket {
+    type Context = ws::WebsocketContext<Self>;
+}
+
+/// Handler for ws::Message message
+impl StreamHandler<Result<ws::Message, ws::ProtocolError>> for WebSocket {
+    fn handle(
+        &mut self,
+        msg: Result<ws::Message, ws::ProtocolError>,
+        ctx: &mut Self::Context,
+    ) {
+        match msg {
+            Ok(ws::Message::Ping(msg)) => ctx.pong(&msg),
+            Ok(ws::Message::Text(text)) => ctx.text(text),
+            Ok(ws::Message::Binary(bin)) => ctx.binary(bin),
+            _ => (),
+        }
+    }
+}
+
+async fn mpp_route(
+    req: HttpRequest,
+    stream: web::Payload,
+    srv: web::Data<Addr<server::MppServer>>,
+) -> Result<HttpResponse, Error> {
+    ws::start(
+        ws_session::WsSession {
+            id: 0,
+            heartbeat: Instant::now(),
+            room: "lobby".to_owned(),
+            name: None,
+            addr: srv.get_ref().clone(),
+        },
+        &req,
+        stream,
+    )
+}
+
+#[actix_rt::main]
+async fn main() -> std::io::Result<()> {
     pretty_env_logger::init();
     let mut args: Vec<String> = env::args().collect();
 
@@ -53,40 +97,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let bind_address = input_address + ":" + &port.to_string();
 
-    let try_socket = TcpListener::bind(bind_address.clone()).await;
-    let mut listener = try_socket.expect("Failed to bind");
     info!("Listening on: {}", bind_address);
-
-    while let Ok((stream, _)) = listener.accept().await {
-        tokio::spawn(accept_connection(stream));
-    }
-
-    Ok(())
-}
-
-async fn accept_connection(stream: TcpStream) {
-    let addr = stream
-        .peer_addr()
-        .expect("connected streams should have a peer address");
-
-    let mut client_ip = addr.ip().to_string();
-
-    let callback = |request: &Request, response: Response| -> Result<Response, ErrorResponse> {
-        if let Some(header) = request.headers().get("X-Real-IP") {
-            client_ip = match header.to_str() {
-                Ok(s) => s.to_owned(),
-                Err(_) => client_ip
-            }
-        }
-
-        let (mut parts, body) = response.into_parts();
-
-        let response_with_protocol = Response::from_parts(parts, body);
-
-        Ok(response_with_protocol)
-    };
-
-    let ws_stream = tokio_tungstenite::accept_hdr_async(stream, callback)
+    HttpServer::new(|| App::new().route("/", web::get().to(mpp_route)))
+        .bind(bind_address.clone())?
+        .run()
         .await
-        .expect("Error during the websocket handshake occurred");
 }

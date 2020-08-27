@@ -13,8 +13,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b682ce69-4a90-40d1-939c-9a56621a3f55" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/utils/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/string_util.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/database/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/database/user.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/json_type/message.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/json_type/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/session/WsSession.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/session/client.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/session/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/session/room.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/string_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/string_util.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +43,13 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="JellyBrick &lt;shlee1503@naver.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SIGN_OFF_COMMIT" value="true" />
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="srjz66c4" />
@@ -53,15 +70,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Dev\MPP-Server\src\database" />
       <recent name="F:\Dev\MPP-Server" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="check" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="channel" value="DEFAULT" />
       <option name="command" value="check" />
@@ -74,8 +87,14 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo Command.check" />
         <item itemvalue="Cargo Command.check" />
       </list>
     </recent_temporary>
@@ -94,37 +113,71 @@
       <updated>1598468269112</updated>
       <workItem from="1598468270517" duration="70000" />
       <workItem from="1598468367477" duration="2466000" />
-      <workItem from="1598504343986" duration="11693000" />
+      <workItem from="1598504343986" duration="18098000" />
+      <workItem from="1598528498580" duration="6513000" />
     </task>
+    <task id="LOCAL-00001" summary="Project init">
+      <created>1598519775627</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1598519775627</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
+    <MESSAGE value="Project init" />
+    <option name="LAST_COMMIT_MESSAGE" value="Project init" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="762" y="238" key="#com.intellij.ide.util.MemberChooser" timestamp="1598516458911">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="762" y="238" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1048@0.0.1920.1048" timestamp="1598516458911" />
-    <state width="939" height="285" key="GridCell.Tab.0.bottom" timestamp="1598517849204">
+    <state x="687" y="270" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598524899937">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="939" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1598517849204" />
-    <state width="939" height="285" key="GridCell.Tab.0.center" timestamp="1598517849203">
+    <state x="687" y="270" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1048@0.0.1920.1048" timestamp="1598524899937" />
+    <state x="569" y="91" key="CommitChangelistDialog2" timestamp="1598519757458">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="939" height="285" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1598517849203" />
-    <state width="939" height="285" key="GridCell.Tab.0.left" timestamp="1598517849203">
+    <state x="569" y="91" key="CommitChangelistDialog2/0.0.1920.1048@0.0.1920.1048" timestamp="1598519757458" />
+    <state x="181" y="85" key="DiffContextDialog" timestamp="1598519698822">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="939" height="285" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1598517849203" />
-    <state width="939" height="285" key="GridCell.Tab.0.right" timestamp="1598517849204">
+    <state x="181" y="85" key="DiffContextDialog/0.0.1920.1048@0.0.1920.1048" timestamp="1598519698822" />
+    <state width="660" height="285" key="GridCell.Tab.0.bottom" timestamp="1598534910159">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
-    <state width="939" height="285" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1598517849204" />
+    <state width="660" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1048@0.0.1920.1048" timestamp="1598534910159" />
+    <state width="660" height="285" key="GridCell.Tab.0.center" timestamp="1598534910159">
+      <screen x="0" y="0" width="1920" height="1048" />
+    </state>
+    <state width="660" height="285" key="GridCell.Tab.0.center/0.0.1920.1048@0.0.1920.1048" timestamp="1598534910159" />
+    <state width="660" height="285" key="GridCell.Tab.0.left" timestamp="1598534910158">
+      <screen x="0" y="0" width="1920" height="1048" />
+    </state>
+    <state width="660" height="285" key="GridCell.Tab.0.left/0.0.1920.1048@0.0.1920.1048" timestamp="1598534910158" />
+    <state width="660" height="285" key="GridCell.Tab.0.right" timestamp="1598534910159">
+      <screen x="0" y="0" width="1920" height="1048" />
+    </state>
+    <state width="660" height="285" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1598534910159" />
     <state x="458" y="168" key="SettingsEditor" timestamp="1598468525220">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="458" y="168" key="SettingsEditor/0.0.1920.1048@0.0.1920.1048" timestamp="1598468525220" />
+    <state x="549" y="255" key="Vcs.Push.Dialog.v2" timestamp="1598519777403">
+      <screen x="0" y="0" width="1920" height="1048" />
+    </state>
+    <state x="549" y="255" key="Vcs.Push.Dialog.v2/0.0.1920.1048@0.0.1920.1048" timestamp="1598519777403" />
   </component>
 </project>
