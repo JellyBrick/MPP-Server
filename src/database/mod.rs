@@ -10,12 +10,12 @@ use crate::database::user::User;
 
 pub(crate) mod user;
 
-struct Database {
+pub(crate) struct Database {
     directory: String
 }
 
 impl Database {
-    fn new(directory: String) -> Self {
+    pub(crate) fn new(directory: String) -> Self {
         fs::create_dir_all(directory.clone());
 
         Self {
@@ -23,22 +23,22 @@ impl Database {
         }
     }
 
-    fn get_user_info(&self, _id: String) -> User {
-        let mut ret = User {
-            color: "".to_string(),
-            name: "".to_string(),
-            _id,
-        };
-
-        return match File::open(_id.to_string() + ".json") {
-            Ok(file) => serde_json::from_reader(file)?,
-            Err(_) => ret
+    pub(crate) fn get_user_info(&self, _id: String) -> User {
+        return match File::open(_id.clone().to_string() + ".json") {
+            Ok(file) => serde_json::from_reader(file).expect("Could not open file!"),
+            Err(_) => User {
+                color: "".to_string(),
+                name: "".to_string(),
+                _id,
+            }
         };
     }
 
-    fn set_user_info(&self, user: User) {
-        match File::create(user._id + ".json") {
-            Ok(file) => serde_json::to_writer(file, &user),
+    pub(crate) fn set_user_info(&self, user: User) {
+        match File::create(user._id.clone() + ".json") {
+            Ok(file) => {
+                serde_json::to_writer(file, &user).expect("Could not write file!");
+            },
             Err(_) => {
                 error!("Could not create file!");
             }

@@ -10,10 +10,9 @@ use tungstenite::accept;
 mod utils;
 mod database;
 mod session;
-mod server;
 mod json_type;
 
-async fn main() {
+fn main() {
     pretty_env_logger::init();
     let mut args: Vec<String> = env::args().collect();
 

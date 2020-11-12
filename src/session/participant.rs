@@ -1,3 +1,4 @@
+use crate::database::Database;
 use crate::database::user::User;
 use crate::session::room::Room;
 
@@ -21,20 +22,20 @@ impl Participant {
     }
 
     pub fn get_user(&self) -> User {
-        Database::new("database/").get_user_info(self._id.clone())
+        Database::new("database/".to_string()).get_user_info(self._id.clone())
     }
 
     pub fn set_user(&self) {
-        Database::new("database/").set_user_info(
+        Database::new("database/".to_string()).set_user_info(
             User {
-                color,
-                name,
-                _id,
+                color: self.color.clone(),
+                name: self.name.clone(),
+                _id: self._id.clone(),
             }
         )
     }
 
     pub fn get_json(&self) -> String {
-        self.get_user().to_string()
+        serde_json::to_string(&self.get_user()).expect("get_json failed")
     }
 }
