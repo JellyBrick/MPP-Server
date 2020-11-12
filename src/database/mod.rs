@@ -23,42 +23,25 @@ impl Database {
         }
     }
 
-    fn get_user_info(hash: u32) -> User {
+    fn get_user_info(&self, _id: String) -> User {
         let mut ret = User {
-            found: false,
-            color: 0,
+            color: "".to_string(),
             name: "".to_string(),
+            _id,
         };
 
-        let mut file = match File::open(hash.to_string()) {
-            Ok(file) => file,
-            Err(_) => return ret
+        return match File::open(_id.to_string() + ".json") {
+            Ok(file) => serde_json::from_reader(file)?,
+            Err(_) => ret
         };
-
-        ret.found = true;
-
-        file.seek(SeekFrom::Start(0));
-
-        ret.color = match file.read_u32::<LittleEndian>() {
-            Ok(uint) => uint,
-            Err(_) => return ret
-        };
-        file.seek(SeekFrom::Start(5));
-        file.read_to_string(&mut ret.name);
-
-        return ret;
     }
 
-    fn set_user_info(hash: u32, user: User) {
-        let mut file = match File::create(hash.to_string()) {
-            Ok(file) => file,
+    fn set_user_info(&self, user: User) {
+        match File::create(user._id + ".json") {
+            Ok(file) => serde_json::to_writer(file, &user),
             Err(_) => {
                 error!("Could not create file!");
-                return;
             }
         };
-
-        file.write_u32::<LittleEndian>(user.color);
-        file.write_all(user.name.as_bytes());
     }
 }

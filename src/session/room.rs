@@ -1,29 +1,33 @@
 use std::collections::{HashMap, VecDeque};
 
-use crate::json_type::message::Message;
-use crate::session::client::Client;
+use crate::database::user::User;
+use crate::json_type::message::ResponseMessage;
 
 struct CrownInfo {
-    owner: Client,
-    old_owner: Client,
+    owner: User,
+    old_owner: User,
     start_pos: [f32; 2],
     end_pos: [f32; 2],
     time: i64,
 }
 
-struct ClientInfo {
+struct CursorInfo {
     id: String,
     x: f32,
     y: f32,
 }
 
-pub struct Room {
+struct RoomSetting {
     lobby: bool,
     visible: bool,
     chat: bool,
-    crown_solo: bool,
+    owner_only: bool,
     color: u32,
+}
+
+pub struct Room {
+    setting: RoomSetting,
     crown: CrownInfo,
-    ids: HashMap<Client, ClientInfo>,
-    chat_log: VecDeque<Message>,
+    user: HashMap<User, CursorInfo>,
+    chat_log: VecDeque<ResponseMessage>,
 }

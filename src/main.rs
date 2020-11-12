@@ -1,14 +1,11 @@
 use std::{env, process, thread};
 use std::borrow::Borrow;
+use std::net::TcpListener;
 use std::time::Instant;
 
-use actix::{Actor, Addr, StreamHandler};
-use actix_web::{App, Error, HttpRequest, HttpResponse, HttpServer, web};
-use actix_web_actors::ws;
 use log::*;
 use pretty_env_logger;
-
-use crate::session::ws_session;
+use tungstenite::accept;
 
 mod utils;
 mod database;
@@ -16,49 +13,7 @@ mod session;
 mod server;
 mod json_type;
 
-/// Define http actor
-struct WebSocket;
-
-impl Actor for WebSocket {
-    type Context = ws::WebsocketContext<Self>;
-}
-
-/// Handler for ws::Message message
-impl StreamHandler<Result<ws::Message, ws::ProtocolError>> for WebSocket {
-    fn handle(
-        &mut self,
-        msg: Result<ws::Message, ws::ProtocolError>,
-        ctx: &mut Self::Context,
-    ) {
-        match msg {
-            Ok(ws::Message::Ping(msg)) => ctx.pong(&msg),
-            Ok(ws::Message::Text(text)) => ctx.text(text),
-            Ok(ws::Message::Binary(bin)) => ctx.binary(bin),
-            _ => (),
-        }
-    }
-}
-
-async fn mpp_route(
-    req: HttpRequest,
-    stream: web::Payload,
-    srv: web::Data<Addr<server::MppServer>>,
-) -> Result<HttpResponse, Error> {
-    ws::start(
-        ws_session::WsSession {
-            id: 0,
-            heartbeat: Instant::now(),
-            room: "lobby".to_owned(),
-            name: None,
-            addr: srv.get_ref().clone(),
-        },
-        &req,
-        stream,
-    )
-}
-
-#[actix_rt::main]
-async fn main() -> std::io::Result<()> {
+async fn main() {
     pretty_env_logger::init();
     let mut args: Vec<String> = env::args().collect();
 
@@ -98,8 +53,17 @@ async fn main() -> std::io::Result<()> {
     let bind_address = input_address + ":" + &port.to_string();
 
     info!("Listening on: {}", bind_address);
-    HttpServer::new(|| App::new().route("/", web::get().to(mpp_route)))
-        .bind(bind_address.clone())?
-        .run()
-        .await
+    let server = TcpListener::bind(bind_address).unwrap();
+
+    for stream in server.incoming() {
+        std::thread::spawn(move || {
+            let mut websocket = accept(stream.unwrap()).unwrap();
+            loop {
+                let msg = websocket.read_message().unwrap();
+                if msg.is_binary() {} else if msg.is_text() {
+                    websocket.write_message(msg).unwrap();
+                }
+            }
+        });
+    }
 }

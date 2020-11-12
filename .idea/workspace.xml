@@ -13,19 +13,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b682ce69-4a90-40d1-939c-9a56621a3f55" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/database/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/database/user.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/json_type/message.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/json_type/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/session/WsSession.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/session/client.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/session/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/session/room.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/session/participant.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/user.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/user.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/json_type/message.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/json_type/message.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/string_util.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/string_util.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/session/client.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/session/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/session/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/session/room.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/session/room.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/session/ws_session.rs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,10 +61,10 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Cargo.toml" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
-    <property name="settings.editor.selected.configurable" value="language.rust.cargo" />
+    <property name="settings.editor.selected.configurable" value="language.rust" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -75,6 +73,11 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="check" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="channel" value="DEFAULT" />
       <option name="command" value="check" />
@@ -87,20 +90,9 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Cargo Command.check" />
-        <item itemvalue="Cargo Command.check" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="RustProjectSettings">
-    <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
+    <option name="toolchainHomeDirectory" value="/usr/bin" />
     <option name="version" value="2" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -115,6 +107,7 @@
       <workItem from="1598468367477" duration="2466000" />
       <workItem from="1598504343986" duration="18098000" />
       <workItem from="1598528498580" duration="6513000" />
+      <workItem from="1605165103316" duration="7155000" />
     </task>
     <task id="LOCAL-00001" summary="Project init">
       <created>1598519775627</created>
@@ -143,10 +136,11 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="762" y="238" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1048@0.0.1920.1048" timestamp="1598516458911" />
-    <state x="687" y="270" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598524899937">
-      <screen x="0" y="0" width="1920" height="1048" />
+    <state x="687" y="302" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1605168971226">
+      <screen x="0" y="32" width="1920" height="1048" />
     </state>
     <state x="687" y="270" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1048@0.0.1920.1048" timestamp="1598524899937" />
+    <state x="687" y="302" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.32.1920.1048@0.32.1920.1048" timestamp="1605168971226" />
     <state x="569" y="91" key="CommitChangelistDialog2" timestamp="1598519757458">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
@@ -155,6 +149,10 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state x="181" y="85" key="DiffContextDialog/0.0.1920.1048@0.0.1920.1048" timestamp="1598519698822" />
+    <state x="775" y="268" key="FileChooserDialogImpl" timestamp="1605165171635">
+      <screen x="0" y="32" width="1920" height="1048" />
+    </state>
+    <state x="775" y="268" key="FileChooserDialogImpl/0.32.1920.1048@0.32.1920.1048" timestamp="1605165171635" />
     <state width="660" height="285" key="GridCell.Tab.0.bottom" timestamp="1598534910159">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
@@ -171,10 +169,11 @@
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
     <state width="660" height="285" key="GridCell.Tab.0.right/0.0.1920.1048@0.0.1920.1048" timestamp="1598534910159" />
-    <state x="458" y="168" key="SettingsEditor" timestamp="1598468525220">
-      <screen x="0" y="0" width="1920" height="1048" />
+    <state x="417" y="115" key="SettingsEditor" timestamp="1605165177504">
+      <screen x="0" y="32" width="1920" height="1048" />
     </state>
     <state x="458" y="168" key="SettingsEditor/0.0.1920.1048@0.0.1920.1048" timestamp="1598468525220" />
+    <state x="417" y="115" key="SettingsEditor/0.32.1920.1048@0.32.1920.1048" timestamp="1605165177504" />
     <state x="549" y="255" key="Vcs.Push.Dialog.v2" timestamp="1598519777403">
       <screen x="0" y="0" width="1920" height="1048" />
     </state>
